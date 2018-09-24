@@ -29,6 +29,7 @@ import brut.androlib.err.CantFindFrameworkResException;
 import brut.androlib.err.OutDirExistsException;
 import brut.androlib.res.AndrolibResources;
 import brut.androlib.res.util.ExtFile;
+import brut.directory.DirectoryException;
 import de.rub.syssec.saaf.misc.config.Config;
 import de.rub.syssec.saaf.misc.config.ConfigKeys;
 
@@ -149,6 +150,9 @@ public class ApkDecoderInterface {
 							throw new DecoderException(e);
 						} catch (AndrolibException e) {
 							throw new DecoderException(e);
+						} catch (DirectoryException e) {
+							// TODO Auto-generated catch block
+							throw new DecoderException (e);
 						}
 	        			decodeSucseccfull = true;
 	        			
@@ -167,6 +171,9 @@ public class ApkDecoderInterface {
 						} catch (IOException e) {
 							throw new DecoderException(e);
 						} catch (AndrolibException e) {
+							throw new DecoderException(e);
+						} catch (DirectoryException e) {
+							// TODO Auto-generated catch block
 							throw new DecoderException(e);
 						}
 	        			

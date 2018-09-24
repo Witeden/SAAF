@@ -142,7 +142,7 @@
 	<typedef name="fatjar.exclude" classname="net.sf.fjep.anttask.FJExcludeType" classpath="${fjepPath}" loaderref="${fjepPath}" />
 	<typedef name="fatjar.jarsource" classname="net.sf.fjep.anttask.FJJarSourceType" classpath="${fjepPath}" loaderref="${fjepPath}" />
 	<typedef name="fatjar.filesource" classname="net.sf.fjep.anttask.FJFileSourceType" classpath="${fjepPath}" loaderref="${fjepPath}" />
-	<target name="fat-jar" depends="test, test-db" description="generates a jar with all dependencies">
+	<target name="fat-jar" depends="test" description="generates a jar with all dependencies">
 		<mkdir dir="${dist.dir}" />
 		<copy verbose="true" todir="${build.prod.dir}">
 			<fileset dir="${src.dir}">
