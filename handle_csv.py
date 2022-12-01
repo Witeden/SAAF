@@ -1,4 +1,5 @@
 import csv
+import copy
 from analyse_malware import getPatterns
 
 CSV_FIELD_NAME = "name"
@@ -18,12 +19,11 @@ STAT_FILE_PATH = "./stat_file.csv"
 
 def createStatFile():
     with open(STAT_FILE_PATH, "w") as file:
-        writer = csv.DictWriter(file, fieldnames = getAllcsvFIELDS())
+        writer = csv.DictWriter(file, fieldnames = getAllcsvFIELDS(), delimiter =',')
         writer.writeheader()
 
 def getAllcsvFIELDS():
-    cvs_fields = CSV_FIELDS
-
+    cvs_fields = copy.deepcopy(CSV_FIELDS)
     with open (CONFIG_FILE_HEURISTIC_PATTERNS, 'r') as f:
         data = f.read()
         cvs_fields += getPatterns(data, TAG_HEURISTIC_PATTERN)
@@ -34,7 +34,7 @@ def getAllcsvFIELDS():
 
 def addRow(name, isMalware, status, date, patterns):
     with open(STAT_FILE_PATH, "a") as file:
-        writer = csv.DictWriter(file, fieldnames = getAllcsvFIELDS())
+        writer = csv.DictWriter(file, fieldnames = getAllcsvFIELDS(), delimiter = ',')
         newRow = {
             CSV_FIELD_NAME: name, 
             CSV_FIELD_IS_MALWARE: isMalware, 
@@ -43,4 +43,3 @@ def addRow(name, isMalware, status, date, patterns):
         }
         newRow.update(patterns)
         writer.writerow(newRow)
-
