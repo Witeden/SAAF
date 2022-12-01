@@ -2,7 +2,7 @@ from os import listdir
 from os.path import isfile, join,abspath
 import subprocess
 
-from analyse_malware import getZipDate,getAnalysisStatus
+from analyse_malware import getZipDate,getAnalysis
 from handle_csv import addRow,createStatFile
 
 def execute_command(command,malware_directory,report_directory,start=0,end=10,isMalware = False):
@@ -16,12 +16,12 @@ def execute_command(command,malware_directory,report_directory,start=0,end=10,is
         
         if listdir(report_directory)!=[]:
             file_report = [r for r in listdir(report_directory)][0]
-            status = getAnalysisStatus(join(abspath(report_directory),file_report))
+            status, patterns = getAnalysis(join(abspath(report_directory),file_report))
             date = getZipDate(join(abspath(malware_directory),file))
 
             subprocess.run(["rm",join(abspath(report_directory),file_report)])
-            addRow(file.replace(".apk",""),isMalware,status,date)
+            addRow(file.replace(".apk",""),isMalware,status,date, patterns)
         else:
-            addRow(file.replace(".apk",""),isMalware,"EXECUTION_FAILED",date)
+            addRow(file.replace(".apk",""),isMalware,"EXECUTION_FAILED",date, patterns)
 
 print(execute_command("./SAAF/scripts/run_saaf.sh","/media/jeremy/MalwareViolet/20kmalgood/mal","./SAAF/reports",start=0,end=100,isMalware=True))
